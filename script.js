@@ -1,0 +1,9 @@
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+window.addEventListener('load',()=>setTimeout(()=>$('#loader').classList.add('hide'),700));
+const menu=$('#menuBtn'),nav=$('#navLinks'); menu.addEventListener('click',()=>nav.classList.toggle('open')); $$('.nav-links a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+const progress=$('#progress'); window.addEventListener('scroll',()=>{const h=document.documentElement;progress.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.12}); $$('.reveal').forEach(el=>observer.observe(el));
+const glow=$('#cursorGlow'); window.addEventListener('pointermove',e=>{glow.style.left=e.clientX+'px';glow.style.top=e.clientY+'px'});
+$$('.magnetic').forEach(btn=>btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.08}px,${(e.clientY-r.top-r.height/2)*.08}px)`}));$$('.magnetic').forEach(btn=>btn.addEventListener('mouseleave',()=>btn.style.transform=''));
+const lightbox=$('#lightbox'),art=$('#lightboxArt'),caption=$('#lightboxCaption'); $$('.photo-tile').forEach(tile=>tile.addEventListener('click',()=>{art.src=tile.dataset.src;caption.textContent=tile.dataset.caption;lightbox.classList.add('open');document.body.style.overflow='hidden'})); const close=()=>{lightbox.classList.remove('open');document.body.style.overflow='';art.src=''};$('#closeLightbox').addEventListener('click',close);lightbox.addEventListener('click',e=>{if(e.target===lightbox)close()});document.addEventListener('keydown',e=>e.key==='Escape'&&close());
+$('#contactForm').addEventListener('submit',e=>{e.preventDefault();$('#formNote').textContent='Thanks — your message is ready to be sent.';e.target.reset()});
